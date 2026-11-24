@@ -1,5 +1,7 @@
 # Third-order bounds for Erdős's distinct subset products problem
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24505892.svg)](https://doi.org/10.5281/zenodo.24505892)
+
 This repository holds the manuscript and verification scripts for
 
 > Ramanuja, *Third-order bounds for Erdős's distinct subset products problem.*
@@ -51,4 +53,6 @@ Both scripts use only the Python standard library (Python ≥ 3.8) and run in ab
 
 ## Citation
 
-Please cite the paper above. To cite the software, see `CITATION.cff`.
+Please cite the paper above. To cite the software:
+
+> Ramanuja, *Verification scripts for third-order bounds in Erdős's distinct subset products problem*, v1.0, Zenodo, 2026. doi:[10.5281/zenodo.24505892](https://doi.org/10.5281/zenodo.24505892)
