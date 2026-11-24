@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Verification scripts for third-order bounds in Erdős's distinct subset products problem"
+authors:
+  - name: "Ramanuja"
+    email: "ramanujamath@yahoo.com"
+repository-code: "https://github.com/ramanujamath/erdos-distinct-subset-products"
+version: "1.0"
+date-released: "2026-11-24"

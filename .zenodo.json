@@ -1,0 +1,7 @@
+{
+  "title": "Verification scripts for third-order bounds in Erdős's distinct subset products problem",
+  "description": "Manuscript and exact verification scripts for the paper proving f(N) - π(N) - π(√N) = Θ(π(N^{1/3})) and its squarefree analogue: dissociated-block checks, the Bernstein certificate for the prime allocation, and the explicit upper-bound constants.",
+  "upload_type": "software",
+  "creators": [{"name": "Ramanuja"}],
+  "keywords": ["Erdős problems", "distinct subset products", "extremal combinatorics", "number theory", "graph theory"]
+}

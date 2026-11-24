@@ -1,0 +1,911 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage[hidelinks]{hyperref}
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\eps}{\varepsilon}
+
+\title{Third-order bounds for Erd\H{o}s's distinct subset products problem}
+\author{Ramanuja\\[2pt]
+\small Independent Researcher\\
+\small Village Kachhubi, Lakhnaur Block, Madhubani District, Bihar 847410, India\\
+\small Corresponding author: \href{mailto:ramanujamath@yahoo.com}{ramanujamath@yahoo.com}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study the third-order terms in Erd\H{o}s's problem on sets with distinct subset products and in its squarefree analogue. Let $f(N)$ be the largest cardinality of a subset of $\{1,\dots,N\}$ with distinct subset products, and let $h(N)$ be the corresponding maximum for squarefree integers. Write $\pi(x)$ for the number of primes at most $x$. We prove
+\[
+f(N)-\pi(N)-\pi(N^{1/2})=\Theta(\pi(N^{1/3}))
+\]
+and
+\[
+h(N)-\pi(N)-\tfrac12\pi(N^{1/2})=\Theta(\pi(N^{1/3})).
+\]
+The upper bounds follow from a general estimate for a finite simple graph with marked vertices. For an edge set and a subset of the marks, record the degree at each vertex, counting each selected mark twice. If $\mu$ is the largest fibre size of this map, then deleting at most $20\log_2\mu$ edges leaves only odd cycles that are pairwise vertex-disjoint and avoid the marks. A bound for the products of removed prime factors allows us to apply this estimate to factorization graphs. Tracking the constants gives $\limsup\,(f(N)-\pi(N)-\pi(N^{1/2}))/\pi(N^{1/3})\le160.49$, and $160.99$ in the squarefree case. The same argument gives projection and stability results with error $O(\pi(N^{1/3}))$. Explicit constructions give lower coefficients $1/2$ and $(64/2583)^{1/3}\approx0.2915$ for the two normalized excesses; the first improves Raghavan's $1/3$. The squarefree construction combines a finite monomial block with quantitative prime matching. Thus the two third-order terms have the same scale, although the existence and values of their asymptotic constants remain open.
+\end{abstract}
+
+\noindent\textbf{2020 Mathematics Subject Classification.} Primary 11B75; Secondary 05C35, 05C70, 11N05.
+
+\noindent\textbf{Keywords.} Distinct subset products; extremal number theory; prime factorization graphs; Eulerian orientations; squarefree integers; primes in short intervals.
+
+%=====================================================================
+\section{Introduction}
+%=====================================================================
+For a positive integer $N$, write $[N]=\{1,\dots,N\}$. A set $A\subseteq[N]$ has \emph{distinct subset products} if the map
+\[
+B\longmapsto\prod_{b\in B}b,\qquad B\subseteq A,
+\]
+is injective. The empty product is $1$, so $1\notin A$. Let $f(N)$ be the maximum cardinality of such a set. An integer is squarefree if no prime square divides it, and $h(N)$ is the same maximum when every element is required to be squarefree. Write $\pi(x)$ for the number of primes at most the real number $x$. All logarithms without a specified base are natural, and all asymptotic statements concern $N\to\infty$ through positive integers unless another limiting variable is specified.
+
+The set of all primes and prime squares at most $N$ has distinct subset products: for each prime, the four possible exponents are $0,1,2,3$. Thus $f(N)\ge\pi(N)+\pi(N^{1/2})$. Erd\H{o}s asked whether these two terms determine $f(N)$ up to an error $o(\pi(N^{1/2}))$; see \cite[p.~137]{Erdos}. Raghavan \cite[Theorems 1.3 and 1.4]{Raghavan} answered this question and improved the lower bound, proving
+\begin{align*}
+f(N)&\le\pi(N)+\pi(N^{1/2})+O(N^{5/12}),\\
+f(N)&\ge\pi(N)+\pi(N^{1/2})+\tfrac13\pi(N^{1/3})-O(1).
+\end{align*}
+For squarefree sets, he proved
+\[
+h(N)=\pi(N)+\tfrac12\pi(N^{1/2})+o(\pi(N^{1/2})),
+\]
+again with upper error $O(N^{5/12})$ \cite[Theorems 1.5 and 1.6]{Raghavan}.
+
+We determine the order of the excess beyond these two leading terms. Put $X=N^{1/3}$ and define
+\[
+\Delta(N)=f(N)-\pi(N)-\pi(\sqrt N),\qquad \Delta_{\mathrm{sf}}(N)=h(N)-\pi(N)-\tfrac12\pi(\sqrt N).
+\]
+
+\begin{theorem}[Third-order scale]\label{thm:scale}
+Both excesses are positive for all sufficiently large $N$, and
+\[
+\Delta(N)=\Theta(\pi(X)),\qquad \Delta_{\mathrm{sf}}(N)=\Theta(\pi(X)).
+\]
+\end{theorem}
+
+The following two theorems give the quantitative bounds.
+
+\begin{theorem}[Upper bounds]\label{thm:upper}
+As $N\to\infty$,
+\begin{align*}
+f(N)&\le\pi(N)+\pi(\sqrt N)+O(\pi(X)),\\
+h(N)&\le\pi(N)+\tfrac12\pi(\sqrt N)+O(\pi(X)).
+\end{align*}
+The implied constants are absolute. More precisely, with $X=N^{1/3}$,
+\[
+\limsup_{N\to\infty}\frac{\Delta(N)}{\pi(X)}\le C_0=160.48\ldots,\qquad
+\limsup_{N\to\infty}\frac{\Delta_{\mathrm{sf}}(N)}{\pi(X)}\le C_0+\tfrac12=160.98\ldots,
+\]
+where $\Delta$, $\Delta_{\mathrm{sf}}$ are defined below and $C_0$ is given in Proposition~\ref{prop:explicit}.
+\end{theorem}
+
+For sufficiently large $N$, define the normalized excesses
+\[
+R(N)=\frac{\Delta(N)}{\pi(X)},\qquad R_{\mathrm{sf}}(N)=\frac{\Delta_{\mathrm{sf}}(N)}{\pi(X)}.
+\]
+
+\begin{theorem}[Lower bounds]\label{thm:lower}
+The normalized excesses satisfy
+\begin{align*}
+&\text{(i)}\quad \liminf_{N\to\infty}R(N)\ge\frac12,\\
+&\text{(ii)}\quad \liminf_{N\to\infty}R_{\mathrm{sf}}(N)\ge\left(\frac{64}{2583}\right)^{1/3}=0.29153\ldots.
+\end{align*}
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:scale}]
+Theorem~\ref{thm:lower} bounds each excess below by a positive constant times $\pi(X)$ for sufficiently large $N$. Theorem~\ref{thm:upper} gives the corresponding upper bounds.
+\end{proof}
+
+\subsection*{The constants in numbers}
+Table~\ref{tab:constants} collects the third-order constants. The lower coefficient $1/2$ in Theorem~\ref{thm:lower}(i) is $50\%$ larger than Raghavan's $1/3$. In the squarefree case, Raghavan's results give the first two terms only, with error $o(\pi(N^{1/2}))$, so Theorem~\ref{thm:lower}(ii) supplies a positive third-order lower bound where none was recorded there. The last two rows of the table are ceilings for the specific constructions used here, not upper bounds for $R$ or $R_{\mathrm{sf}}$. The block of Lemma~\ref{lem:B3} cannot give more than $1/2$ (Remark~\ref{rem:opt}). The thirteen-monomial block of Lemma~\ref{lem:block13} cannot give more than $e/(7^{7/15}8^{8/15})\approx0.3616$ (Proposition~\ref{prop:blockbound}); the allocation of Section~\ref{sec:sfblock} attains $0.2915$, about $81\%$ of this ceiling. On the upper side, Proposition~\ref{prop:explicit} makes the constant in Theorem~\ref{thm:upper} explicit. About $125$ of the $160.5$ comes from the factor $20$ in Theorem~\ref{thm:deletion} multiplied by the cofactor entropy of Lemma~\ref{lem:cofactor}, so an improvement of the graph estimate would lower the upper constant directly. The true constants lie between the two rows, and the gap between $0.5$ and $160.5$ shows how much remains open.
+
+\begin{table}[ht]
+\centering
+\caption{Third-order constants, normalized by $\pi(N^{1/3})$.}\label{tab:constants}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+& unrestricted, $R(N)$ & squarefree, $R_{\mathrm{sf}}(N)$\\
+\midrule
+Lower bound, Raghavan \cite{Raghavan} & $1/3\approx0.3333$ & --- \\
+Lower bound, Theorem~\ref{thm:lower} & $1/2=0.5000$ & $(64/2583)^{1/3}\approx0.2915$\\
+Ceiling of the construction used & $1/2$ (Remark~\ref{rem:opt}) & $\approx0.3616$ (Prop.~\ref{prop:blockbound})\\
+Upper bound, Proposition~\ref{prop:explicit} & $\le160.49$ & $\le160.99$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{A graph theorem}
+The main estimate is a statement about finite simple graphs, independent of the arithmetic application. For such a graph $H$, write $V(H)$ and $E(H)$ for its vertex and edge sets. Let $S\subseteq V(H)$ be a set of marked vertices. For $F\subseteq E(H)$, let $d_F(v)$ be the number of edges of $F$ incident with $v$. For $T\subseteq S$, define the marked degree vector
+\[
+\Phi(F,T)_v=d_F(v)+2\,\mathbf 1_{v\in T}\qquad(v\in V(H)),
+\]
+where $\mathbf 1_{v\in T}$ is $1$ if $v\in T$ and $0$ otherwise. The largest fibre size of this map is
+\[
+\mu(H,S)=\max_a\bigl|\{(F,T):\Phi(F,T)=a\}\bigr|,
+\]
+where the maximum runs over integer vectors indexed by $V(H)$. It is finite and at least $1$.
+
+\begin{theorem}[Degree fibres and cycle deletion]\label{thm:deletion}
+For every finite simple graph $H$ and marked set $S\subseteq V(H)$, one can delete at most $20\log_2\mu(H,S)$ edges so that all remaining cycles have odd length, are pairwise vertex-disjoint, and avoid $S$.
+\end{theorem}
+
+For the arithmetic application, partition $V(H)$ into $M$ and $L$, where $S\subseteq M$ and $L$ is independent, meaning that no edge has both endpoints in $L$. Write $\kappa(H)$ for the number of connected components, including isolated vertices. Theorem~\ref{thm:edge} gives the associated edge bound
+\[
+|E(H)|+|S|+\kappa(H)\le|L|+\tfrac32|M|+\tfrac12|S|+20\log_2\mu(H,S).
+\]
+Indeed, after the deletions in Theorem~\ref{thm:deletion}, every cycle uses at least two unmarked vertices of $M$, and the cycles have disjoint vertex sets. This explains the coefficient $3/2$. Section~\ref{sec:graph} proves both statements using Schrijver's bound for Eulerian orientations \cite{Schrijver}, in the strengthened form of Borb\'enyi and Csikv\'ari \cite[proof of Theorem~1.1]{BC}, and a comparison between maximum cuts and edge sets meeting every even cycle. The constant $20$ is not asserted to be optimal.
+
+\subsection*{Arithmetic applications and constructions}
+We apply these graph estimates to Raghavan's factorization graph \cite[Definition~2.4]{Raghavan}. Removing prime factors at most $X$ leaves at most two prime factors per integer. A projected prime gives an edge to an auxiliary vertex, a product of two distinct primes gives an edge between them, and a prime square marks its prime vertex. The removed factors attached to edges between prime vertices and to marks have at most $2^{O(\pi(X))}$ possible subset products. After a separate argument for edges incident with the auxiliary vertex, this bounds the largest degree fibre by $2^{O(\pi(X))}$. Taking $M$ to be the primes in $(X,\sqrt N]$ and $L$ those in $(\sqrt N,N]$ gives the upper bounds in Theorem~\ref{thm:upper}. Theorem~\ref{thm:deletion} also gives projection and stability results with error $O(\pi(X))$.
+
+The unrestricted construction modifies Raghavan's seven-element block \cite[proof of Theorem~1.4]{Raghavan} by replacing one prime cube by the prime itself. This permits a larger prime in that position. The squarefree construction uses thirteen monomials on eight primes. Eight allocation patterns supply the coefficient in Theorem~\ref{thm:lower}(ii). We complete the unused primes by Raghavan's chain of triangles \cite[proof of Theorem~1.6]{Raghavan}, with quantitative prime matching obtained from Ingham's theorem on primes in short intervals \cite{Ingham}. We also bound the number of disjoint copies of this particular block, regardless of their prime allocation.
+
+The lower coefficients are not asserted to be optimal. The question left by Theorem~\ref{thm:scale} is whether $R(N)$ and $R_{\mathrm{sf}}(N)$ converge and, if they do, what their limits are.
+
+Section~\ref{sec:graph} proves the graph estimate. Sections~\ref{sec:cofactor} and~\ref{sec:graphA} give the arithmetic upper bounds. Section~\ref{sec:structure} establishes projection and stability results. Section~\ref{sec:lower} gives the lower constructions and the bound for the squarefree block.
+
+\subsection*{Notation}
+For a finite set $S$, write $|S|$ for its cardinality. The symbols $\lfloor x\rfloor$ and $\lceil x\rceil$ denote the greatest integer at most $x$ and the least integer at least $x$, respectively. For a prime $p$ and a positive integer $n$, let $v_p(n)$ be the exponent of $p$ in $n$. For $u\ge1$, put
+\[
+\rho_u(n)=\prod_{p>u}p^{v_p(n)}.
+\]
+Thus $\rho_u$ removes all prime factors at most $u$. For a set $B$ of positive integers, write $\rho_u(B)=\{\rho_u(b):b\in B\}$. We write $P_j$ for the $j$th prime and use the prime number theorem in the forms $\pi(x)\sim x/\log x$ and $P_j\sim j\log j$. Here $F\sim G$ means $F/G\to1$. The notation $F=O(G)$ or $F\ll G$ means $|F|\le CG$ for some constant $C$ and all sufficiently large values of the limiting variable; $F=o(G)$ means $F/G\to0$. For positive quantities, $F\asymp G$ and $F=\Theta(G)$ both mean that $cG\le F\le CG$ for fixed positive constants $c,C$. Upper-bound constants are absolute. Constants in lower constructions may depend on their fixed finite parameters.
+
+%=====================================================================
+\section{Fibres of a graph's degree map}\label{sec:graph}
+%=====================================================================
+All graphs are finite and simple. We retain the notation $V(H)$, $E(H)$, $d_F$, $\Phi$, $\mu(H,S)$, and $\kappa(H)$ from the introduction. A path has distinct vertices; a cycle has distinct vertices except for its repeated initial vertex. A trail is a sequence of adjacent vertices with no repeated edge; it is closed when its endpoints agree. A cycle is even or odd according to its number of edges. A bridge is an edge whose deletion increases the number of connected components. A forest has no cycle; a tree is a connected forest. A spanning subgraph contains all the vertices of its original graph. Subgraphs are edge-disjoint or vertex-disjoint when their respective edge sets or vertex sets are disjoint. A vertex set is independent if no edge joins two of its vertices. The degree $d_H(v)$ is the number of edges of $H$ incident with $v$.
+
+Let $V(H)=M\cup L$ be a disjoint union, with $L$ independent, and let $S\subseteq M$ be the marked set. Define the cycle rank
+\[
+r(H)=|E(H)|-|V(H)|+\kappa(H).
+\]
+Deleting edges or marks cannot increase $\mu(H,S)$, since every choice in the smaller graph extends by omitting the deleted objects. Put
+\[
+D(H;M,L,S)=r(H)-\tfrac12|M\setminus S|.
+\]
+
+\begin{theorem}\label{thm:edge}
+Every marked graph and partition as above satisfy
+\begin{equation}\label{eq:edge}
+|E(H)|+|S|+\kappa(H)\le|L|+\tfrac32|M|+\tfrac12|S|+20\log_2\mu(H,S).
+\end{equation}
+Equivalently, $D(H;M,L,S)\le20\log_2\mu(H,S)$.
+\end{theorem}
+
+Theorem~\ref{thm:edge} is the estimate needed for the arithmetic upper bound. Theorem~\ref{thm:deletion} gives the corresponding deletion statement. We prove the two estimates through orientation counts and an edge-deletion argument. The constants below are sufficient for the arithmetic estimate; they are not asserted to be optimal.
+
+An orientation assigns a direction to every edge of a graph. Its outdegree at a vertex is the number of edges directed away from that vertex. For a finite simple graph $G$, let $\alpha(G)$ be the largest number of orientations having the same outdegree vector. An Eulerian orientation has equal indegree and outdegree at every vertex; write $\mathrm{EO}(G)$ for their number.
+
+We use Schrijver's lower bound for Eulerian orientations \cite{Schrijver}, in the strengthened form given in the proof of \cite[Theorem~1.1]{BC}: if a nonempty connected graph $G$ has positive even degrees $d_v$, then
+\begin{equation}\label{eq:schrijver}
+\mathrm{EO}(G)\ge2\prod_{v\in V(G)}\frac{\binom{d_v}{d_v/2}}{2^{d_v/2}}.
+\end{equation}
+The factor $2$ comes from the two terms corresponding to the empty and full edge sets in that proof. Here $\binom ab$ is the binomial coefficient, for integers $0\le b\le a$.
+
+\begin{lemma}\label{lem:orient}
+Every finite simple graph $G$ satisfies
+\[
+r(G)\le6\log_2\alpha(G).
+\]
+\end{lemma}
+
+\begin{proof}
+Deleting isolated vertices and successively deleting vertices of degree one does not change the cycle rank. The largest orientation fibre cannot increase under these deletions: fix the direction of each deleted edge when extending orientations back to the original graph. Moreover, $\alpha$ is multiplicative over components and $r$ is additive. It therefore suffices to consider a connected graph of minimum degree at least two. Write $m=|E(G)|$, $v=|V(G)|$, and $r=m-v+1$.
+
+Let $o$ be the number of vertices of odd degree; the degree sum formula implies that $o$ is even. Pair these vertices arbitrarily. For each pair, add a path of length two through a new vertex, using distinct new vertices for different pairs. The resulting graph $G^+$ is simple, connected, and has only positive even degrees. An original vertex of degree $d$ now has degree $d'=2\lceil d/2\rceil$; every new vertex has degree two.
+
+In an Eulerian orientation of $G^+$, each added path is directed from one endpoint to the other. There are $2^{o/2}$ possible choices of these directions. Once they are fixed, the required outdegree at every original vertex is fixed. Consequently,
+\[
+\mathrm{EO}(G^+)\le2^{o/2}\alpha(G).
+\]
+For an integer $d\ge2$, put
+\[
+a(d)=\log_2\binom{d'}{d'/2}-\frac{d'}2-\frac12\mathbf 1_{d\text{ odd}},\qquad d'=2\lceil d/2\rceil.
+\]
+The new degree-two vertices contribute a factor $1$ to the product in \eqref{eq:schrijver}. Thus
+\begin{equation}\label{eq:alpha}
+\log_2\alpha(G)\ge1+\sum_{x\in V(G)}a(d_G(x)).
+\end{equation}
+We claim that
+\[
+a(d)\ge\frac{d-2}{12}\qquad(d\ge2).
+\]
+For $d=2$ this is equality. For $d=3$, it follows from $3^{12}>2^{19}$. If $d'=2k$, then
+\[
+a(d+2)-a(d)=\log_2\frac{2k+1}{k+1}\ge\log_2\frac32>\frac16.
+\]
+Induction separately on the two parities proves the claim. Since $\sum_x(d_G(x)-2)=2(r-1)$, \eqref{eq:alpha} gives
+\[
+\log_2\alpha(G)\ge1+\frac{r-1}6\ge\frac r6.\qedhere
+\]
+\end{proof}
+
+\begin{corollary}[The bipartite case]\label{cor:bip}
+If $H$ is bipartite, then for every $S\subseteq V(H)$,
+\[
+r(H)\le6\log_2\mu(H,S).
+\]
+\end{corollary}
+
+\begin{proof}
+Choose a bipartition $U\cup W$ of $H$. Identify an edge subset $F$ with the orientation in which its edges point from $U$ to $W$ and all other edges point from $W$ to $U$. The outdegrees are $d_F(u)$ for $u\in U$ and $d_H(w)-d_F(w)$ for $w\in W$. It follows that $\mu(H,\emptyset)=\alpha(H)$. Allowing marks cannot decrease the largest fibre, since one may always take $T=\emptyset$. Apply Lemma~\ref{lem:orient}.
+\end{proof}
+
+A graph is a \emph{cactus} if any two distinct cycles have at most one common vertex; disconnected graphs are allowed in this definition. In a cactus, the cycles have disjoint edge sets. A cactus is \emph{odd} if all its cycles have odd length.
+
+\begin{proposition}[The cactus case]\label{prop:cactus}
+If $H$ is a cactus, then
+\[
+D(H;M,L,S)\le2\log_2\mu(H,S).
+\]
+\end{proposition}
+
+\begin{proof}
+Let $e$ be the number of even cycles. Among the odd cycles, choose a maximal collection of $t$ pairs of cycles that meet at a vertex, with no cycle occurring in two pairs. The unpaired odd cycles are vertex-disjoint. Let $q$ be the number of these cycles that contain a vertex of $S$, and choose one such mark on each of them.
+
+Each even cycle supplies two alternating edge subsets with equal degree vectors. Each pair of meeting odd cycles supplies the same type of choice: traverse both cycles as an even closed trail and alternate its edges. Finally, an unpaired odd cycle with a chosen mark supplies two choices with the same vector $\Phi$: one alternating edge set has degree two at the marked vertex, while the other has degree zero there and includes the mark. Their degrees at every other vertex agree.
+
+The edge sets and marks used by these $e+t+q$ choices are pairwise disjoint. Hence all their independent selections are distinct and have the same vector $\Phi$, giving
+\begin{equation}\label{eq:etq}
+e+t+q\le\log_2\mu(H,S).
+\end{equation}
+Delete one edge from each even cycle, from each of the $2t$ paired odd cycles, and from each of the $q$ marked unpaired cycles. At most $e+2t+q\le2\log_2\mu(H,S)$ edges are deleted. In the remaining spanning graph $H_0$, all cycles are odd, vertex-disjoint, and avoid $S$. Each uses at least two vertices of $M\setminus S$, since $L$ is independent. Thus $r(H_0)\le|M\setminus S|/2$. Deleting $j$ edges decreases the cycle rank by at most $j$, which proves the assertion.
+\end{proof}
+
+For a graph $H$, let $\mathrm{mc}(H)$ be the maximum number of edges crossing a partition of its vertices into two parts. Its \emph{cut excess} is
+\[
+b(H)=\mathrm{mc}(H)-|V(H)|+\kappa(H).
+\]
+It is nonnegative, since a spanning forest is bipartite. Let $\tau_{\mathrm{even}}(H)$ be the minimum number of edges whose deletion leaves no even cycle. Such an edge set is an even-cycle edge transversal.
+
+A cut vertex is a vertex whose removal increases the number of connected components. A block is a maximal connected subgraph with no cut vertex; bridges and isolated vertices are counted as blocks of one edge and one vertex, respectively. Every cycle lies in one block, and distinct blocks have disjoint edge sets. The quantities $b$ and $\tau_{\mathrm{even}}$ are additive over blocks. For the second quantity this follows because every cycle lies in a block. For the first, maximum cuts of the blocks can be joined by reversing their two parts at shared cut vertices, and $|V(H)|-\kappa(H)$ is the sum of $|V(B)|-1$ over its blocks $B$.
+
+\begin{lemma}\label{lem:tau}
+Every finite simple graph satisfies
+\[
+\tau_{\mathrm{even}}(H)\le3b(H).
+\]
+\end{lemma}
+
+\begin{proof}
+We induct on the number of edges. Additivity reduces the induction step to a graph consisting of one block. An isolated vertex or a single edge has both quantities zero. An odd cycle also has both quantities zero. For an even cycle, both equal $1$.
+
+It remains to consider a block that is not a cycle and has at least three vertices. It has minimum degree at least two and therefore has a vertex $v$ of degree $d\ge3$. Retain one edge incident with $v$ and delete the other $d-1$ such edges, obtaining a spanning graph $H'$. Since $v$ is not a cut vertex, $H-v$ is connected; hence $H'$ is connected too.
+
+In a maximum cut of $H'$, its unique edge at $v$ is cut. Keep the parts of all other vertices fixed and choose the part of $v$ in $H$ that cuts at least $\lceil d/2\rceil$ of its incident edges. No other cut edge changes. Consequently,
+\[
+\mathrm{mc}(H)\ge\mathrm{mc}(H')+\lceil d/2\rceil-1,\qquad b(H)-b(H')\ge\lceil d/2\rceil-1.
+\]
+Using the induction hypothesis and $d-1\le3(\lceil d/2\rceil-1)$ for $d\ge3$, we obtain
+\[
+\tau_{\mathrm{even}}(H)\le d-1+\tau_{\mathrm{even}}(H')\le d-1+3b(H')\le3b(H).\qedhere
+\]
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:edge}]
+Let $F$ be the spanning subgraph consisting of the edges of a maximum cut of $H$. It has the same connected components as $H$. Otherwise, reversing the two parts on one component of $F$ would preserve all cut edges and introduce at least one new cut edge. Thus $F$ is bipartite and $r(F)=b(H)$. Corollary~\ref{cor:bip} gives
+\begin{equation}\label{eq:bH}
+b(H)=r(F)\le6\log_2\mu(F,\emptyset)\le6\log_2\mu(H,S).
+\end{equation}
+Delete a minimum even-cycle edge transversal, obtaining $H_0$. A graph with no even cycle is an odd cactus: if two cycles met in more than one vertex, their union would contain three internally disjoint paths with common endpoints. Two of these paths have the same parity and form an even cycle. By Proposition~\ref{prop:cactus},
+\[
+D(H_0;M,L,S)\le2\log_2\mu(H_0,S)\le2\log_2\mu(H,S).
+\]
+Deleting $\tau_{\mathrm{even}}(H)$ edges decreases the cycle rank by at most that number. Lemma~\ref{lem:tau} and \eqref{eq:bH} now give
+\[
+D(H;M,L,S)\le\tau_{\mathrm{even}}(H)+2\log_2\mu(H,S)\le20\log_2\mu(H,S).
+\]
+This is equivalent to \eqref{eq:edge}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:deletion}]
+The proof of Theorem~\ref{thm:edge} deletes at most $18\log_2\mu(H,S)$ edges to leave an odd cactus. The deletion in the proof of Proposition~\ref{prop:cactus} then removes at most $2\log_2\mu(H,S)$ further edges and has the stated properties. These deletion arguments use no condition on a partition of the vertex set.
+\end{proof}
+
+%=====================================================================
+\section{Counting the removed prime factors}\label{sec:cofactor}
+%=====================================================================
+The next lemma also bounds a subset whose elements have only small prime factors.
+
+\begin{lemma}\label{lem:pairs}
+Suppose that $N^{1/4}\le u\le N^{1/2}$ and $A\subseteq[N]$ has distinct subset products. Let $t$ be a nonnegative integer, and let $(U_i,V_i)$, $1\le i\le t$, be pairs of disjoint subsets of $A$ such that $U_i\ne V_i$, $|U_i\cup V_i|\le2$, the sets $U_i\cup V_i$ are pairwise disjoint, and
+\[
+\rho_u\Bigl(\prod_{a\in U_i}a\Bigr)=\rho_u\Bigl(\prod_{a\in V_i}a\Bigr).
+\]
+Then $t=O(\pi(u))$, uniformly in the stated range. In particular, if every prime factor of every element of $B\subseteq A$ is at most $u$, then $|B|=O(\pi(u))$.
+\end{lemma}
+
+\begin{proof}
+Independent choices between the two members of each pair give $2^t$ distinct products with the same valuations above $u$. The primes at most $u^{1/2}$ contribute at most
+\[
+J=\pi(u^{1/2})\log_2(N+1)=O(u^{1/2})
+\]
+to the base-two logarithm of the number of possible valuation vectors. Here we use $v_p(N!)\le N$. Put $R=\pi(u)-\pi(u^{1/2})$. The prime number theorem gives $R\asymp u/\log u$, so $J\le R$ for all sufficiently large $N$, uniformly in $u$.
+
+Each original integer has at most eight prime factors greater than $u^{1/2}$, counted with multiplicity. The total contribution from these primes over the at most $2t$ chosen integers is at most $16t$. The arithmetic--geometric mean inequality gives
+\[
+2^t\le2^J\Bigl(1+\frac{16t}R\Bigr)^R.
+\]
+Thus $w=t/R$ satisfies $w\le1+\log_2(1+16w)$, which bounds $w$ by an absolute constant. For the last assertion, use the pairs $(\{b\},\emptyset)$, one for each $b\in B$.
+\end{proof}
+
+\begin{lemma}\label{lem:inj}
+Under the hypotheses on $A$ and $u$ in Lemma~\ref{lem:pairs}, one can delete $O(\pi(u))$ elements so that $\rho_u$ is injective on the remaining set and never takes the value $1$. One may retain a representative of every attained value greater than $1$.
+\end{lemma}
+
+\begin{proof}
+The fibre over $q$ is $\{a\in A:\rho_u(a)=q\}$. Let its size be $m_q$. Pair elements inside each fibre over $q>1$, and use singleton--empty-set pairs in the fibre over $1$. Lemma~\ref{lem:pairs} gives $m_1+\sum_{q>1}\lfloor m_q/2\rfloor=O(\pi(u))$. Deleting the first fibre and all but one element of every other fibre costs at most twice this quantity.
+\end{proof}
+
+For an integer $b$ whose projection has two prime factors, counted with multiplicity, write
+\[
+\rho_X(b)=pq,\qquad p,q>X,\qquad c_b=b/(pq).
+\]
+The primes $p,q$ may coincide. The cofactor $c_b$ is at most $X$ and has all prime factors at most $X$.
+
+\begin{lemma}[Cofactor bound]\label{lem:cofactor}
+Let $B\subseteq[N]$ have distinct subset products and suppose every $b\in B$ has the preceding form. For primes $p\le X$, put
+\[
+w_p=\sum_{b\in B}v_p(c_b),\qquad Q(B)=\sum_{p\le X}\log_2(1+w_p).
+\]
+Then $Q(B)=O(\pi(X))$.
+\end{lemma}
+
+\begin{proof}
+For $\sqrt X\le r\le X$, let $B(r)$ consist of the elements whose cofactor has a prime factor greater than $r$. Every prime factor of an element of $B(r)$ is at most $T=X^2/r$. Indeed, each endpoint prime is less than $N/(rX)=T$, and the cofactor itself is at most $X\le T$. Since $X\le T\le X^{3/2}=\sqrt N$, Lemma~\ref{lem:pairs} gives
+\begin{equation}\label{eq:Br}
+|B(r)|=O(\pi(X^2/r)),\qquad\sum_{r<p\le X}w_p=O(\pi(X^2/r)).
+\end{equation}
+For the second estimate, a cofactor at most $X$ has at most two prime factors greater than $r$, counted with multiplicity.
+
+Since $\prod_{b\in B}c_b$ divides $N!$, each $w_p$ is at most $N$. Thus primes at most $2\sqrt X$ contribute $O(\pi(2\sqrt X)\log N)=O(\sqrt X)$ to $Q(B)$. For the remaining primes use the intervals $(r_j,2r_j]$, where $r_j=X/2^{j+1}\ge\sqrt X$ and $j$ is a nonnegative integer. There are $O(r_j/\log N)$ primes in such an interval, and \eqref{eq:Br} bounds the sum of their $w_p$ by $O(X^2/(r_j\log N))$. Concavity of $\log(1+x)$ therefore gives
+\[
+\sum_{r_j<p\le2r_j}\log_2(1+w_p)\ll\frac{r_j}{\log N}\log\Bigl(1+C\frac{X^2}{r_j^2}\Bigr)\ll\frac{X(j+1)}{2^j\log N}
+\]
+for an absolute constant $C>0$. To use an upper bound for the number of primes here, note that $a\log(1+w/a)$ is increasing in $a>0$ for fixed $w\ge0$. Summing the convergent series $\sum_{j\ge0}(j+1)2^{-j}$ proves the assertion, since $\sqrt X=o(\pi(X))$.
+\end{proof}
+
+%=====================================================================
+\section{The factorization graph}\label{sec:graphA}
+%=====================================================================
+Let $A\subseteq[N]$ have distinct subset products. Apply Lemma~\ref{lem:inj} with $u=X$ and call the remaining set $A_0$. Every projected value is $p$, $pq$ with $p\ne q$, or $p^2$, with all primes greater than $X$: three such prime factors would have product greater than $N$. Put
+\[
+M=\{p:X<p\le\sqrt N,\ p\text{ prime}\},\qquad L=\{p:\sqrt N<p\le N,\ p\text{ prime}\}.
+\]
+Introduce an auxiliary vertex $*$. A projected value $p$ gives the edge $*p$, and a value $pq$ gives the edge $pq$. A value $p^2$ marks the vertex $p$ and gives no edge. Let $S\subseteq M$ be the set of marks and put $s=|S|$. Projection is injective, so the graph is simple and every mark represents one original element. Also, $L$ is independent, since the product of two primes greater than $\sqrt N$ exceeds $N$.
+
+Let $B$ be the original elements represented by edges not incident with $*$, together with the marked elements. Lemma~\ref{lem:cofactor} applies to $B$; put $Q=Q(B)=O(\pi(X))$.
+
+\begin{lemma}\label{lem:star}
+Deleting $O(\pi(X))$ edges incident with $*$ makes every remaining edge incident with $*$ a bridge.
+\end{lemma}
+
+\begin{proof}
+For a component $D$ of the graph with $*$ deleted, let $d_D$ be its number of neighbours of $*$. In a spanning tree of $D$, pair these distinguished vertices by $\lfloor d_D/2\rfloor$ edge-disjoint paths. Such a pairing follows by rooting the tree and passing at most one unpaired path from each processed subtree to its parent. Adjoining the two endpoint edges to $*$ gives
+\[
+t=\sum_D\lfloor d_D/2\rfloor
+\]
+edge-disjoint cycles through $*$. Alternating edges on each cycle, starting at $*$, gives two products with equal valuations above $X$, whether the cycle is odd or even. Thus these cycles provide $2^t$ distinct products with fixed valuations above $X$.
+
+For primes at most $\sqrt X$, the logarithm of the number of possible valuations is $O(\sqrt X)$. For primes in $(\sqrt X,X]$, the total contribution from the $2t$ edges incident with $*$ is at most $12t$, because each original integer has at most six prime factors greater than $\sqrt X$. The contribution from all other cycle edges is bounded by $Q$. Using $1+a+b\le(1+a)(1+b)$ and the arithmetic--geometric mean inequality, we obtain, for $R=\pi(X)-\pi(\sqrt X)$,
+\[
+2^t\le2^{Q+O(\sqrt X)}\Bigl(1+\frac{12t}R\Bigr)^R.
+\]
+Since $Q=O(\pi(X))$ and $R\asymp\pi(X)$, this implies $t=O(\pi(X))$. Retain at most one edge from $*$ into each component $D$. The number deleted is at most $2t$, and each retained edge is a bridge.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:upper}]
+After the projection deletion and Lemma~\ref{lem:star}, the total cost is $O(\pi(X))$. Delete the auxiliary vertex to obtain $H$. At most one edge from $*$ remains into each component of $H$. Thus the number of retained original elements is at most $|E(H)|+|S|+\kappa(H)$.
+
+Within a fibre of $\Phi$, the corresponding subset products have equal valuations at all primes greater than $X$. Their cofactor products must be distinct, since $A$ has distinct subset products. There are at most $\prod_{p\le X}(1+w_p)=2^Q$ possible cofactor products, so
+\[
+\log_2\mu(H,S)\le Q=O(\pi(X)).
+\]
+Theorem~\ref{thm:edge} yields
+\[
+|A|\le|L|+\tfrac32|M|+\tfrac12s+O(\pi(X))=\pi(N)+\tfrac12\pi(\sqrt N)+\tfrac12s+O(\pi(X)).
+\]
+In general $s\le\pi(\sqrt N)$, whereas $s=0$ when every element of $A$ is squarefree. These give the two assertions. The explicit constants are derived in Proposition~\ref{prop:explicit}.
+\end{proof}
+
+\subsection*{An explicit constant}
+Each $O(\pi(X))$ above can be made explicit. Three elementary observations sharpen the counts. First, an integer at most $N$ has at most five prime factors greater than $N^{1/6}=\sqrt X$, counted with multiplicity. Second, if $r\ge\sqrt X$, a cofactor $c_b\le X$ has at most one prime factor greater than $r$. Third, an element on an edge $*p$ has $p>X$ among those five factors, so at most four of its prime factors lie in $(\sqrt X,X]$.
+
+\begin{proposition}\label{prop:explicit}
+Let $c_2=4.5785\ldots$ be the positive root of $w=\log_2(1+5w)$, and put
+\[
+q_*=\sum_{k\ge1}2^{-k}\log_2\bigl(1+c_2\,4^k\bigr)=6.2388\ldots.
+\]
+Let $\tau_*=12.947\ldots$ be the positive root of $\tau=q_*+\log_2(1+8\tau)$, and let $y_*=11.818\ldots$ be the positive root of $y=2\log_2(1+5y)$. Then
+\[
+\limsup_{N\to\infty}\frac{\Delta(N)}{\pi(X)}\le C_0:=20q_*+2\tau_*+y_*-2=160.48\ldots,\qquad
+\limsup_{N\to\infty}\frac{\Delta_{\mathrm{sf}}(N)}{\pi(X)}\le C_0+\frac12.
+\]
+\end{proposition}
+
+\begin{proof}
+Each function $w\mapsto w-\log_2(1+aw)$ with $a>1/\ln 2$ is convex, negative just to the right of $0$, and tends to infinity. So it has a unique positive root, and a nonnegative $w$ at which the function is at most $o(1)$ is at most the root plus $o(1)$. All $o(1)$ terms below are uniform in the stated ranges and tend to $0$ as $N\to\infty$.
+
+\emph{Step 1: the projection deletion.} In the proof of Lemma~\ref{lem:inj} with $u=X$, let $a=m_1$ and let $b=\sum_{q>1}\lfloor m_q/2\rfloor$, so that at most $a+2b$ elements are deleted. These $a+b$ pairs involve $a+2b$ integers, each with at most five prime factors in $(\sqrt X,X]$. The argument of Lemma~\ref{lem:pairs} gives $2^{a+b}\le2^{o(R)}(1+5(a+2b)/R)^R$ with $R=\pi(X)-\pi(\sqrt X)$. With $y=(a+2b)/R$ and $a+b\ge y/2$, we get $y\le2\log_2(1+5y)+o(1)$, so at most $(y_*+o(1))\pi(X)$ elements are deleted.
+
+\emph{Step 2: the cofactor entropy.} Let $\sqrt X\le r\le X$ and $T=X^2/r\in[X,X^{3/2}]$. The singleton form of Lemma~\ref{lem:pairs} with $u=T$, using five prime factors per integer above $\sqrt T\ge\sqrt X$, gives $|B(r)|\le(c_2+o(1))\pi(T)$. By the second observation, $\sum_{p>r}w_p\le|B(r)|$. For $k\ge1$ let $I_k=(X/2^k,X/2^{k-1}]$, with $n_k$ primes, and let $W_k=\sum_{p\in I_k}w_p\le|B(X/2^k)|\le(c_2+o(1))\pi(2^kX)$. By concavity, $\sum_{p\in I_k}\log_2(1+w_p)\le n_k\log_2(1+W_k/n_k)$. For fixed $k$, the prime number theorem gives $n_k/\pi(X)\to2^{-k}$ and $\limsup W_k/n_k\le c_2\,4^k$. For all $k$ with $X/2^k\ge\sqrt X$ and all large $X$, Chebyshev's bounds give $n_k\le 9\cdot2^{-k}\pi(X)$ and $W_k\le C2^k\pi(X)$ for an absolute $C$. Since $n\log_2(1+W/n)$ increases in $n$, each term is at most $9\cdot2^{-k}\pi(X)\log_2(1+C4^k)$, which is summable in $k$. The primes at most $2\sqrt X$ contribute $o(\pi(X))$. Dominated convergence gives $Q\le(q_*+o(1))\pi(X)$.
+
+\emph{Step 3: edges at the auxiliary vertex.} In the proof of Lemma~\ref{lem:star}, the $2t$ elements on edges at $*$ contribute at most $8t$ to the valuations in $(\sqrt X,X]$, by the third observation. Hence $2^t\le2^{Q+o(\pi(X))}(1+8t/R)^R$, so $t\le(\tau_*+o(1))\pi(X)$, and at most $2t$ elements are deleted.
+
+\emph{Step 4: assembly.} As in the proof of Theorem~\ref{thm:upper}, with $\log_2\mu(H,S)\le Q$,
+\[
+|A|\le(y_*+2\tau_*+o(1))\pi(X)+|L|+\tfrac32|M|+\tfrac12s+20Q.
+\]
+Here $|L|+\frac32|M|=\pi(N)+\frac12\pi(\sqrt N)-\frac32\pi(X)$, and $s\le|M|=\pi(\sqrt N)-\pi(X)$ in general, while $s=0$ in the squarefree case. Inserting $Q\le(q_*+o(1))\pi(X)$ gives the two bounds.
+\end{proof}
+
+\begin{remark}
+The factor $20$ from Theorem~\ref{thm:edge} accounts for $20q_*\approx124.8$ of $C_0$. Reducing the constant in Lemma~\ref{lem:tau} or in Lemma~\ref{lem:orient}, or bounding $\mu(H,S)$ more efficiently than through $Q$, would reduce $C_0$ proportionally.
+\end{remark}
+
+%=====================================================================
+\section{Structure after projection}\label{sec:structure}
+%=====================================================================
+The cycle reduction has a structural consequence in addition to the cardinality estimate. We first record the exact condition for sets having at most two prime factors per element.
+
+\begin{lemma}\label{lem:exact}
+Let $\mathcal P$ be a finite set of primes, and let
+\[
+B\subseteq\{p:p\in\mathcal P\}\cup\{p^2:p\in\mathcal P\}\cup\{pq:p,q\in\mathcal P,\ p\ne q\}.
+\]
+Construct a graph on $\mathcal P\cup\{*\}$ by representing $p$ by the edge $*p$ and $pq$ by the edge $pq$. Mark a vertex $p$ when $p^2\in B$, and let $S$ be the marked set. Then $B$ has distinct subset products if and only if every cycle is odd, the cycles are pairwise vertex-disjoint, and every cycle avoids $S\cup\{*\}$.
+\end{lemma}
+
+\begin{proof}
+An even cycle gives a relation between the products of its alternating edges. If no even cycle is present, distinct cycles can meet at only one vertex, as in the proof of Theorem~\ref{thm:edge}. Two odd cycles meeting at a vertex give an even closed trail and hence another such relation. An odd cycle through a marked vertex gives a relation using the corresponding square. Finally, alternating the edges of an odd cycle starting at $*$ gives equal products: the extra contribution at the starting vertex corresponds to the integer $1$. These observations prove necessity.
+
+For sufficiency, cancel the common elements of two subsets with equal products. Assign a coefficient $\eps_e\in\{-1,0,1\}$ to each edge and a coefficient $\eta_p\in\{-1,0,1\}$ to each square element. Set $\eta_p=0$ at unmarked vertices. Equality of prime valuations says
+\[
+\sum_{e\ni p}\eps_e+2\eta_p=0\qquad(p\in\mathcal P).
+\]
+Modulo two, the edges with nonzero coefficients have even degree at every prime vertex. Their degree at $*$ is also even, since the sum of all vertex degrees is even. Every edge in a finite graph of even degrees belongs to a cycle: a bridge would give a vertex set with exactly one edge leaving it, whose degree sum in the graph would be odd. Every cycle in the subgraph of nonzero edges is a cycle of the original graph. Since the original cycles are vertex-disjoint, the nonzero edges form a union of whole cycles.
+
+Each such cycle is odd and avoids both marked vertices and $*$. At each of its vertices, the two incident coefficients must sum to zero. They would therefore have to alternate around an odd cycle, which is impossible. There are consequently no nonzero edge coefficients, and the valuation equations then give $\eta_p=0$ for every $p$. The two original subsets were equal.
+\end{proof}
+
+For the rest of this section, put
+\[
+\mathcal P=\{p:X<p\le N,\ p\text{ prime}\}.
+\]
+We use the projection $\rho_X$ and retain the sets $M$ and $L$ from Section~\ref{sec:graphA}.
+
+\begin{theorem}[Preserving distinctness under projection]\label{thm:proj}
+There is an absolute constant $C$ such that every set $A\subseteq[N]$ with distinct subset products contains a subset $A'$ satisfying
+\[
+|A\setminus A'|\le C\pi(X),
+\]
+on which $\rho_X$ is injective, and for which $\rho_X(A')$ has distinct subset products. Its factorization graph has pairwise vertex-disjoint odd cycles, all avoiding the marked vertices and $*$.
+\end{theorem}
+
+\begin{proof}
+Apply Lemma~\ref{lem:inj} with $u=X$ and then Lemma~\ref{lem:star}. The total number of deletions is $O(\pi(X))$. Delete the auxiliary vertex from the remaining graph to obtain $H$, with marked set $S$. Let $B$ be the retained original integers represented by the edges and marks of $H$. As in the proof of Theorem~\ref{thm:upper},
+\[
+\log_2\mu(H,S)\le Q(B)=O(\pi(X)).
+\]
+Theorem~\ref{thm:deletion} deletes $O(\pi(X))$ further edges so that every cycle of $H$ is odd, the cycles are vertex-disjoint, and none contains a marked vertex. Reinsert the retained edges incident with $*$. They are still bridges, since deletion cannot create a cycle. The resulting graph therefore satisfies Lemma~\ref{lem:exact}. Each deleted edge removes its corresponding original integer, so the total cost is $O(\pi(X))$.
+\end{proof}
+
+Excluding $*$ from the surviving cycles is necessary for this projection assertion. For example, the graph of $\{p,q,pq\}$ is an odd triangle through $*$, but $p\cdot q=pq$. Lemma~\ref{lem:star} removes this obstruction before the other cycle reductions.
+
+Raghavan \cite[Example~5.1]{Raghavan} constructs large sets from trees and prime squares. The next theorem gives a quantitative completion statement for projected sets near the corresponding two-term bound.
+
+\begin{theorem}[A tree and prime squares]\label{thm:tree}
+Suppose that $A\subseteq[N]$ has distinct subset products and
+\[
+|A|\ge\pi(N)+\pi(N^{1/2})-r,\qquad r\ge0.
+\]
+Then there are a subset $A''\subseteq A$ and a set $T\subseteq[N]$ such that
+\begin{enumerate}
+\item $|A\setminus A''|=O(r+\pi(X))$;
+\item $\rho_X$ is injective on $A''$, and $\rho_X(A'')\subseteq T$;
+\item the graph of $T$ is a spanning tree on $\mathcal P\cup\{*\}$, and its square elements are exactly $p^2$ for $p\in M$;
+\item $|T\setminus\rho_X(A'')|=O(r+\pi(X))$.
+\end{enumerate}
+In particular, $T$ has distinct subset products and
+\[
+|T|=\pi(N)+\pi(N^{1/2})-2\pi(X).
+\]
+All implied constants are absolute.
+\end{theorem}
+
+\begin{proof}
+Apply Theorem~\ref{thm:proj}. Let $q=|\mathcal P|$ and $m=|M|$. Let $S$ be the marked set in the graph of $\rho_X(A')$, and put $s=|S|$ and $\delta=m-s$. Every remaining cycle is odd, avoids marked vertices and $*$, and contains at least two vertices of $M\setminus S$, because the primes greater than $N^{1/2}$ form an independent set. If $c$ denotes the number of cycles, then $c\le\delta/2$. The graph has at most $q+c$ edges, so
+\[
+|A'|\le q+s+c\le q+m-\frac\delta2.
+\]
+On the other hand, $|A'|\ge\pi(N)+\pi(N^{1/2})-r-O(\pi(X))$, while $q+m=\pi(N)+\pi(N^{1/2})-2\pi(X)$. Hence $\delta=O(r+\pi(X))$ and $c=O(r+\pi(X))$.
+
+Delete one edge from each cycle, retaining all square elements, and denote the corresponding subset of $A'$ by $A''$. Its graph is a forest on the full vertex set $\mathcal P\cup\{*\}$. Let $\kappa$ be its number of connected components, including isolated vertices. Then
+\[
+|A''|=q+1-\kappa+s,\qquad\delta+\kappa-1=q+m-|A''|=O(r+\pi(X)).
+\]
+For each component not containing $*$, choose a prime vertex $p$ in that component and add the edge $*p$, corresponding to the integer $p$. These $\kappa-1$ edges extend the forest to a spanning tree. Add also the $\delta$ missing elements $p^2$ with $p\in M$. All added integers are at most $N$, and every previously retained projected integer is at most its original element of $A$.
+
+The resulting set $T$ has the stated size and contains $\rho_X(A'')$. Its distinct subset products follow from Lemma~\ref{lem:exact}, since its graph is a tree.
+\end{proof}
+
+This conclusion concerns the projected integers. It does not bound how many original elements have nontrivial factors composed of primes at most $X$.
+
+\begin{theorem}[Squarefree structure]\label{thm:sfstruct}
+Suppose that $A\subseteq[N]$ consists of squarefree integers, has distinct subset products, and satisfies
+\[
+|A|\ge\pi(N)+\tfrac12\pi(N^{1/2})-r,\qquad r\ge0.
+\]
+After deleting $O(r+\pi(X))$ elements and applying the injective projection $\rho_X$, the resulting graph has the following properties:
+\begin{enumerate}
+\item its cycles are pairwise vertex-disjoint triangles, each containing two vertices of $M$ and one prime greater than $N^{1/2}$;
+\item all but $O(r+\pi(X))$ vertices of $M$ lie on these triangles;
+\item adding $O(r+\pi(X))$ edges of the form $*p$ makes the graph connected, without creating any further cycle.
+\end{enumerate}
+The added edges represent prime integers at most $N$. The completed set has distinct subset products.
+\end{theorem}
+
+\begin{proof}
+Apply Theorem~\ref{thm:proj} and use the full vertex set $\mathcal P\cup\{*\}$. Write $q=|\mathcal P|$, $m=|M|$, and let $\kappa$ and $c$ be the numbers of connected components and cycles. There are no square elements. The graph has $q+1-\kappa+c$ edges, since deleting one edge per cycle gives a forest. Consequently
+\[
+\kappa-1+\tfrac12(m-2c)=q+\tfrac12m-|A'|=O(r+\pi(X)).
+\]
+Both terms on the left are nonnegative: every cycle avoids $*$ and contains at least two vertices of $M$.
+
+For a cycle $C$, let $a_C$ be its number of vertices in $M$, and let $u$ be the number of vertices of $M$ on no cycle. Vertex-disjointness gives
+\[
+m-2c=u+\sum_C(a_C-2).
+\]
+The large prime vertices form an independent set. Since $C$ is odd, its length is at most $2a_C-1$. Thus $a_C=2$ forces $C$ to be a triangle with two medium prime vertices and one large prime vertex.
+
+Delete every edge of each cycle with $a_C\ge3$. For these cycles, $a_C\le3(a_C-2)$, so at most $6(m-2c)$ edges are deleted. The number of medium prime vertices outside the surviving triangles is at most $3(m-2c)$. The number of connected components increases by at most the number of deleted edges, and is therefore $O(r+\pi(X))+1$. Join each component not containing $*$ to $*$ by one edge $*p$, choosing a prime vertex $p$ in that component. These edges are bridges and create no cycles. The final assertion follows from Lemma~\ref{lem:exact}.
+\end{proof}
+
+%=====================================================================
+\section{Lower bounds}\label{sec:lower}
+%=====================================================================
+Let $d$ be a positive integer and let $p_1,\dots,p_d$ be distinct primes. A monomial in these primes is a product $p_1^{e_1}\cdots p_d^{e_d}$ with nonnegative integer exponents. A block is a finite set of such monomials, and its prime support is the set of primes dividing its elements. A union of blocks with distinct subset products and pairwise disjoint prime supports still has distinct subset products, by unique factorization.
+
+A finite set of integer vectors is \emph{dissociated} if its subset sums are distinct. Equivalently, every relation with coefficients in $\{-1,0,1\}$ has all coefficients zero. A block has distinct subset products exactly when its exponent vectors form a dissociated set. For a nonnegative integer vector $v=(v_1,\dots,v_d)$, write $|v|_1=\sum_iv_i$ for its total degree.
+
+\subsection{Uniform prime indices}
+The prime number theorem gives the following uniform estimate.
+
+\begin{lemma}[Uniform prime indices]\label{lem:unif}
+For every fixed positive integer $D$,
+\[
+\max_{1\le n\le Dg}\Bigl|\frac{P_n}{g\log g}-\frac ng\Bigr|=o(1)\qquad(g\to\infty),
+\]
+where $g$ ranges over positive integers. Consequently, if $c>0$ is fixed and $g=\lfloor c\pi(X)\rfloor$, then
+\[
+\frac{P_n}X=c\,\frac ng+o(1)\qquad(1\le n\le Dg),
+\]
+uniformly as $X\to\infty$.
+\end{lemma}
+
+\begin{proof}
+The prime number theorem gives $P_n\sim n\log n$. For fixed $0<\delta<1$, this proves the first assertion uniformly for $\delta g\le n\le Dg$, since $\log n/\log g\to1$ uniformly there. For $n<\delta g$, monotonicity bounds both nonnegative terms in the absolute value by $\delta+o(1)$. Letting $\delta\to0$ proves the assertion. Finally, $g\log g\sim cX$, which gives the second assertion.
+\end{proof}
+
+\subsection{The unrestricted construction}
+Up to a permutation of its prime variables, Raghavan's block in \cite[proof of Theorem~1.4]{Raghavan} consists of $p^3,q^3,r^3,r^2,pr^2,qr^2,pq$. We replace $r^3$ by $r$. The resulting block retains distinct subset products and allows $r$ to exceed $N^{1/3}$.
+
+\begin{lemma}[A three-prime block]\label{lem:B3}
+For distinct primes $p,q,r$, the set
+\[
+\mathcal B(p,q,r)=\{p^3,q^3,r,r^2,pr^2,qr^2,pq\}
+\]
+has distinct subset products.
+\end{lemma}
+
+\begin{proof}
+Let $\eps_1,\dots,\eps_7\in\{-1,0,1\}$ be the coefficients of a multiplicative relation, with the elements ordered as displayed. Equality of valuations gives
+\[
+3\eps_1+\eps_5+\eps_7=0,\qquad3\eps_2+\eps_6+\eps_7=0,
+\]
+and
+\[
+\eps_3+2\eps_4+2\eps_5+2\eps_6=0.
+\]
+The first two equations force $\eps_1=\eps_2=0$ and $\eps_5=\eps_6=-\eps_7$. The last equation then gives $\eps_3+2\eps_4-4\eps_7=0$. Parity forces $\eps_3=0$, after which $\eps_4=2\eps_7$ forces both coefficients to vanish. Every coefficient is therefore zero.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:lower}(i)]
+Fix $0<c<1/2$, put $X=N^{1/3}$ and $g=\lfloor c\pi(X)\rfloor$, and for $1\le j\le g$ choose
+\[
+p_j=P_{2j-1},\qquad q_j=P_{2j},\qquad r_j=P_{3g-j+1}.
+\]
+These triples partition the first $3g$ primes. Writing $t=j/g$, Lemma~\ref{lem:unif} gives, uniformly in $j$,
+\[
+\frac{p_j}X=2ct+o(1),\qquad\frac{q_j}X=2ct+o(1),\qquad\frac{r_j}X=c(3-t)+o(1).
+\]
+For $0\le t\le1$, the function $2t(3-t)^2$ is increasing and at most $8$. Hence
+\[
+\max\{p_j^3,q_j^3,p_jr_j^2,q_jr_j^2\}\le(8c^3+o(1))N<N
+\]
+for sufficiently large $N$. The remaining elements of $\mathcal B(p_j,q_j,r_j)$ are at most a constant times $X^2=o(N)$.
+
+Start with the set of all primes at most $N$ and all prime squares at most $N$. For each triple, replace the six elements $p_j,p_j^2,q_j,q_j^2,r_j,r_j^2$ by the seven elements of $\mathcal B(p_j,q_j,r_j)$. The six elements are present initially, since $P_{3g}=O(X)<N^{1/2}$ for large $N$. Each replacement uses its own three primes and has distinct subset products by Lemma~\ref{lem:B3}. For every other prime, the retained elements are the prime and, when available, its square; the four possible exponents $0,1,2,3$ are distinct. Thus the full constructed set has distinct subset products and cardinality
+\[
+\pi(N)+\pi(N^{1/2})-6g+7g=\pi(N)+\pi(N^{1/2})+g.
+\]
+Since $g\ge c\pi(X)-1$, this proves the required lower bound for every fixed $c<1/2$. Letting $c\uparrow1/2$ gives the limit inferior assertion.
+\end{proof}
+
+\begin{remark}\label{rem:opt}
+The coefficient $1/2$ is optimal for disjoint replacements by the blocks $\mathcal B(p,q,r)$ from Lemma~\ref{lem:B3}. Indeed, each block contains $p^3$ and $q^3$, so both $p$ and $q$ are at most $N^{1/3}$. If $g$ blocks have disjoint prime supports, then $2g\le\pi(N^{1/3})$. Each replacement contributes one additional element, so this scheme cannot contribute more than $\frac12\pi(N^{1/3})$. The conclusion concerns only these replacements and gives no upper bound for $\Delta(N)$. In numbers, the scheme already reaches its ceiling: $1/2=0.5$, compared with Raghavan's $1/3\approx0.333$.
+\end{remark}
+
+\subsection{Prime matching and completion}
+For the next lemma we use Ingham's theorem \cite{Ingham}: for any fixed $\eta>0$, uniformly when $u^{5/8+\eta}\le v\le u$,
+\begin{equation}\label{eq:ingham}
+\pi(u+v)-\pi(u)=(1+o(1))\frac v{\log u}\qquad(u\to\infty).
+\end{equation}
+The choice of interval length in Lemma~\ref{lem:match} makes the number of omitted primes $o(\pi(N^{1/3}))$ when $x=N^{1/2}$. This is the precision needed to retain the gain from the finite blocks. Any exponent below $2/3$ would do here, so stronger results on primes in short intervals, such as Huxley's exponent $7/12$ \cite{Huxley}, are not needed.
+
+\begin{lemma}[Quantitative prime matching]\label{lem:match}
+Let $x$ be sufficiently large, put $H=x^{13/20}$, and suppose that $2\le Z\le x/2$. Put
+\[
+k=\Bigl\lfloor\frac{\pi(x-H)-\pi(Z)}2\Bigr\rfloor.
+\]
+The largest $2k$ primes in $(Z,x-H]$ can be listed in decreasing order as $q_1,r_1,\dots,q_k,r_k$. If $p_i$ is the $i$th prime greater than $x$, then
+\[
+p_i\le2x,\qquad p_iq_i\le x^2,\qquad p_ir_i\le x^2\qquad(1\le i\le k).
+\]
+Moreover,
+\[
+\pi(x)-\pi(x-H)=O(H/\log x).
+\]
+All estimates and the threshold for $x$ are independent of $Z$.
+\end{lemma}
+
+\begin{proof}
+First, uniformly for $H\le t\le x/2$, we have
+\begin{equation}\label{eq:short}
+\pi(x+t)-\pi(x)=(1+o(1))\frac t{\log x},\qquad\pi(x)-\pi(x-t)=(1+o(1))\frac t{\log x}.
+\end{equation}
+Indeed, partition either interval into $\lfloor t/H\rfloor$ equal pieces. Each piece has length between $H$ and $2H$, with left endpoint between $x/2$ and $3x/2$. Take $\eta=1/80$ in \eqref{eq:ingham}. Since $5/8+1/80=51/80<13/20$, its lower bound on the interval length holds uniformly for these pieces when $x$ is large. The upper bound holds because $2H\le x/2$ for large $x$. The logarithms of their left endpoints are $(1+o(1))\log x$. Summing the uniform estimates proves \eqref{eq:short}. The same argument with $t=H$ gives the final assertion of the lemma.
+
+The prime number theorem gives
+\[
+\pi(2x)-\pi(x)=(1+o(1))\frac x{\log x}>\frac12\pi(x)\ge k
+\]
+for sufficiently large $x$. Thus $p_i\le2x$ for every $i\le k$. If $q_i<x/2$, this already gives $p_iq_i<x^2$.
+
+Otherwise put $t=x-q_i$, so $H\le t\le x/2$. At least $2i-2$ primes lie strictly between $q_i$ and $x$, and hence
+\[
+i\le\tfrac12\bigl(\pi(x)-\pi(q_i)\bigr)+1.
+\]
+By \eqref{eq:short}, uniformly in this range,
+\[
+\pi(x+t)-\pi(x)\ge\tfrac34\bigl(\pi(x)-\pi(q_i)\bigr)\ge i
+\]
+when $x$ is large. For the last inequality, use $\pi(x)-\pi(q_i)\ge(1+o(1))H/\log x\to\infty$. Therefore $p_i\le x+t$, and $p_iq_i\le(x+t)(x-t)\le x^2$. Finally, $r_i<q_i$ gives the corresponding bound for $r_i$.
+\end{proof}
+
+\begin{lemma}[Squarefree completion]\label{lem:completion}
+For all sufficiently large $N$ and every real number $2\le Z\le\sqrt N/2$, there is a squarefree set $C\subseteq[N]$ with distinct subset products such that every prime factor of every element exceeds $Z$ and
+\[
+|C|\ge\pi(N)+\tfrac12\pi(\sqrt N)-\tfrac32\pi(Z)-O\Bigl(\frac{N^{13/40}}{\log N}\Bigr).
+\]
+The implied constant and the threshold for $N$ are independent of $Z$.
+\end{lemma}
+
+\begin{proof}
+Put $x=\sqrt N$, $H=x^{13/20}$, and
+\[
+k=\Bigl\lfloor\frac{\pi(x-H)-\pi(Z)}2\Bigr\rfloor.
+\]
+For sufficiently large $N$, we have $k\ge1$, uniformly for $Z\le x/2$. Lemma~\ref{lem:match} supplies pairs $q_i,r_i$ in $(Z,x-H]$ and distinct primes $p_i>x$ with $p_iq_i,p_ir_i\le N$ for $1\le i\le k$. Let $R$ be the set of primes in $(x,N]$ other than $p_1,\dots,p_k$, and define
+\begin{equation}\label{eq:C}
+C=R\cup\{q_1\}\cup\bigcup_{i=1}^k\{p_iq_i,p_ir_i,q_ir_i\}\cup\{r_iq_{i+1}:1\le i<k\}.
+\end{equation}
+Every element is squarefree and at most $N$. The graph consists of the triangles on $\{p_i,q_i,r_i\}$, joined successively by the bridges $r_iq_{i+1}$. The edge $*q_1$ joins the chain to the auxiliary vertex, and every prime in $R$ supplies one further edge incident with that vertex. The only cycles are the vertex-disjoint triangles, all avoiding $*$. Lemma~\ref{lem:exact} therefore proves that $C$ has distinct subset products.
+
+The construction has size
+\begin{align*}
+|C|&=\pi(N)-\pi(x)-k+1+3k+(k-1)\\
+&=\pi(N)-\pi(x)+3k\\
+&=\pi(N)+\tfrac12\pi(x)-\tfrac32\pi(Z)-\tfrac32\bigl(\pi(x)-\pi(x-H)\bigr)+O(1).
+\end{align*}
+The last assertion of Lemma~\ref{lem:match} gives the stated error. This is Raghavan's triangle construction \cite[proof of Theorem~1.6]{Raghavan}, with the initial prime $q_1$ added and the matching estimate made quantitative.
+\end{proof}
+
+\subsection{Allocating finite blocks}
+The next lemma converts bounds for monomials in affine functions into arithmetic lower coefficients. It also allows several prime ranges to be assigned to each position in a block.
+
+\begin{lemma}[Allocation of finite blocks]\label{lem:alloc}
+Let $V\subseteq\Z_{\ge0}^d$ be a dissociated set of $m$ nonzero vectors satisfying $|v|_1\le3$, with equality for at least one vector. Let $k$ be a positive integer. For $1\le s\le k$ and $1\le i\le d$, choose
+\[
+u_{s,i}(t)=a_{s,i}+b_{s,i}t,\qquad a_{s,i}\in\Z,\quad b_{s,i}\in\{-1,1\},
+\]
+so that the intervals $u_{s,i}([0,1])$ are exactly $[0,1],[1,2],\dots,[kd-1,kd]$, each used once. Suppose that
+\[
+\mathcal M=\max_{\substack{1\le s\le k,\ 0\le t\le1\\ v\in V,\ |v|_1=3}}\ \prod_{i:v_i>0}u_{s,i}(t)^{v_i}>0.
+\]
+Then
+\[
+\liminf_{N\to\infty}R(N)\ge\frac{k(m-2d)}{\mathcal M^{1/3}}.
+\]
+If every vector in $V$ has coordinates in $\{0,1\}$, then
+\[
+\liminf_{N\to\infty}R_{\mathrm{sf}}(N)\ge\frac{k(m-3d/2)}{\mathcal M^{1/3}}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $P_j$ denote the $j$th prime. Fix $0<c<\mathcal M^{-1/3}$ and put $g=\lfloor c\pi(X)\rfloor$. For $1\le j\le g$, assign to position $i$ of a block of type $s$ the prime
+\[
+p^{(j)}_{s,i}=\begin{cases}P_{a_{s,i}g+j},&b_{s,i}=1,\\ P_{a_{s,i}g-j+1},&b_{s,i}=-1.\end{cases}
+\]
+The indices partition the first $kdg$ primes. Lemma~\ref{lem:unif} gives
+\[
+\frac{p^{(j)}_{s,i}}X=c\,u_{s,i}(j/g)+o(1)
+\]
+uniformly in $s,i,j$. Every cubic monomial is therefore at most $(c^3\mathcal M+o(1))N<N$ for sufficiently large $N$. Monomials of smaller degree are $O(X^2)=o(N)$. The resulting $kg$ blocks contribute $kmg$ integers, have disjoint prime supports, and have distinct subset products.
+
+Put $Z=P_{kdg}=O(X)$. In the unrestricted case, adjoin every prime in $(Z,N]$ and every square of a prime in $(Z,\sqrt N]$. These have distinct subset products on primes exceeding $Z$. The union has size
+\[
+\pi(N)+\pi(\sqrt N)+k(m-2d)g.
+\]
+In the squarefree case, Lemma~\ref{lem:completion} supplies a set supported on primes exceeding $Z$. Since $\pi(Z)=kdg$, its union with the blocks has size at least
+\[
+\pi(N)+\tfrac12\pi(\sqrt N)+k(m-3d/2)g-O\Bigl(\frac{N^{13/40}}{\log N}\Bigr).
+\]
+The last error is $o(\pi(X))$ by the prime number theorem, since $13/40<1/3$. In either case, divide the excess by $\pi(X)$ and then let $c\uparrow\mathcal M^{-1/3}$.
+\end{proof}
+
+\subsection{A squarefree construction}\label{sec:sfblock}
+We use the following thirteen monomials on eight primes.
+
+\begin{lemma}\label{lem:block13}
+For distinct primes $p_1,\dots,p_8$, the following thirteen integers have distinct subset products:
+\[
+\begin{array}{lll}
+b_1=p_2p_5p_7, & b_2=p_2p_6p_8, & b_3=p_1p_5p_6,\\
+b_4=p_1p_3, & b_5=p_2p_3p_8, & b_6=p_5p_7p_8,\\
+b_7=p_2p_4p_5, & b_8=p_4p_6p_7, & b_9=p_3,\\
+b_{10}=p_4, & b_{11}=p_4p_6p_8, & b_{12}=p_1p_2p_7,\\
+b_{13}=p_1p_4p_8. & &
+\end{array}
+\]
+\end{lemma}
+
+\begin{proof}
+Suppose that $\prod_{j=1}^{13}b_j^{\eps_j}=1$, where $\eps_j\in\{-1,0,1\}$. Adding the valuation equations at $p_2,p_8$ and subtracting those at $p_4,p_7$ gives
+\[
+\eps_{10}=2(\eps_2+\eps_5-\eps_8),
+\]
+so $\eps_{10}=0$. Put $a=\eps_9$, $b=\eps_{11}$, $c=\eps_{12}$, and $d=\eps_{13}$. The remaining equations give
+\[
+\begin{array}{ll}
+\eps_1=b-c+d, & \eps_2=(3a-b-5c-5d)/2,\\
+\eps_3=-a+2c+2d, & \eps_4=a-3c-3d,\\
+\eps_5=-2a+3c+3d, & \eps_6=(a-b-c-3d)/2,\\
+\eps_7=(a-b-c-3d)/2, & \eps_8=(-a-b+c+d)/2.
+\end{array}
+\]
+Since $3|c+d|\le|a|+|\eps_4|\le2$, we have $c+d=0$. Then $\eps_5=-2a$ forces $a=0$. Integrality of $\eps_2=-b/2$ forces $b=0$, and $\eps_1=-2c$ forces $c=d=0$. All coefficients vanish.
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\caption{The affine prime-allocation functions $u_{s,i}(t)$ on $0\le t\le1$.}\label{tab:alloc}
+\begin{tabular}{@{}c|cccccccc@{}}
+$s\backslash i$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8\\\hline
+1 & $30+t$ & $22-t$ & $46-t$ & $29+t$ & $31+t$ & $20-t$ & $28+t$ & $20+t$\\
+2 & $35+t$ & $14-t$ & $60+t$ & $36+t$ & $39+t$ & $15-t$ & $32+t$ & $16-t$\\
+3 & $48-t$ & $7-t$ & $59+t$ & $8-t$ & $8+t$ & $49-t$ & $43+t$ & $46+t$\\
+4 & $38-t$ & $13-t$ & $55+t$ & $18-t$ & $19-t$ & $27+t$ & $40+t$ & $26+t$\\
+5 & $33+t$ & $16+t$ & $55-t$ & $24+t$ & $26-t$ & $24-t$ & $34+t$ & $23-t$\\
+6 & $41+t$ & $10-t$ & $53-t$ & $11-t$ & $12-t$ & $42+t$ & $44+t$ & $38+t$\\
+7 & $53+t$ & $4+t$ & $59-t$ & $63-t$ & $64-t$ & $2+t$ & $58-t$ & $3+t$\\
+8 & $50+t$ & $1-t$ & $61+t$ & $5+t$ & $2-t$ & $56+t$ & $49+t$ & $52-t$
+\end{tabular}
+\end{table}
+
+\begin{proof}[Proof of Theorem~\ref{thm:lower}(ii)]
+Apply Lemma~\ref{lem:alloc} with $d=8$, $m=13$, $k=8$, and the exponent vectors of Lemma~\ref{lem:block13}. Use the affine functions in Table~\ref{tab:alloc}; its entry in row $s$ and column $i$ is $u_{s,i}(t)$.
+
+The ranges of these functions are the unit intervals from $0$ to $64$, each used once. It remains to bound the ten cubic monomials in each row.
+
+Here is an exact polynomial certificate for this bound. If $F(t)=A_0+A_1t+A_2t^2+A_3t^3$, define
+\[
+\beta_j(F)=\sum_{\ell=0}^{j}\frac{\binom j\ell}{\binom3\ell}A_\ell\qquad(0\le j\le3).
+\]
+Expanding the right-hand side shows that
+\[
+F(t)=\sum_{j=0}^{3}\beta_j(F)\binom3jt^j(1-t)^{3-j}.
+\]
+The four factors $\binom3jt^j(1-t)^{3-j}$ are nonnegative and sum to one on $[0,1]$. Thus $F(t)\le\max_j\beta_j(F)$ there. Let
+\[
+E=\{257,268,156,238,578,245,467,468,127,148\},
+\]
+where, for example, $257$ denotes the index set $\{2,5,7\}$. For each row $s$, the largest coefficient $\beta_j$ among the polynomials $\prod_{i\in e}u_{s,i}(t)$, with $e\in E$, is given in Table~\ref{tab:bern}.
+
+\begin{table}[ht]
+\centering
+\caption{The largest Bernstein coefficient among the ten cubic monomials in each allocation row.}\label{tab:bern}
+\begin{tabular}{@{}c|cccccccc@{}}
+$s$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8\\\hline
+$\max_{e,j}\beta_j$ & 20240 & 20475 & 20304 & 19926 & 20592 & 20664 & 19530 & 17442
+\end{tabular}
+\end{table}
+
+These values follow by substitution in the displayed formula for $\beta_j$; only integer and rational arithmetic is involved. Consequently all the cubic products are at most $20664$. Equality occurs in row $6$ for the monomial $b_3$ at $t=0$: $41\cdot12\cdot42=20664$. Hence $\mathcal M=20664$, so $\mathcal M^{1/3}\approx27.44$, and Lemma~\ref{lem:alloc} gives
+\[
+\liminf_{N\to\infty}R_{\mathrm{sf}}(N)\ge\frac{8(13-12)}{20664^{1/3}}=\left(\frac{64}{2583}\right)^{1/3}=0.29153\ldots.\qedhere
+\]
+\end{proof}
+
+\subsection{A bound for this block construction}
+The squarefree block imposes a restriction on the number of disjoint copies that any prime allocation can accommodate.
+
+\begin{proposition}\label{prop:blockbound}
+Suppose that $g=g(N)$ copies of the block in Lemma~\ref{lem:block13} have disjoint prime supports and that every integer in every copy is at most $N$. Then
+\[
+\limsup_{N\to\infty}\frac{g(N)}{\pi(N^{1/3})}\le\frac{e}{7^{7/15}\,8^{8/15}}=0.36163\ldots,
+\]
+where $e$ is the base of the natural logarithm.
+\end{proposition}
+
+\begin{proof}
+Within one block, the identity
+\[
+b_3^2b_5^2b_6b_7b_8^2b_{12}b_{13}=p_3^2\prod_{i\ne3}p_i^4
+\]
+and the ten factors on the left give $p_3^2\prod_{i\ne3}p_i^4\le N^{10}$. Multiplying over all $g$ blocks gives exponents $4$ on $7g$ distinct primes and exponents $2$ on another $g$ distinct primes. This weighted product is minimized by assigning exponent $4$ to the first $7g$ primes and exponent $2$ to the next $g$ primes. Indeed, using smaller primes decreases the product, and if $p<q$ then $p^4q^2\le p^2q^4$.
+
+Write $L(r)=\sum_{j=1}^r\log P_j$ for nonnegative integers $r$, with $L(0)=0$. We obtain
+\begin{equation}\label{eq:L}
+L(7g)+L(8g)\le5g\log N.
+\end{equation}
+The prime number theorem and Stirling's formula give
+\begin{equation}\label{eq:Lasymp}
+L(r)=r(\log r+\log\log r-1)+o(r)\qquad(r\to\infty).
+\end{equation}
+For completeness, use $\log P_j=\log j+\log\log j+o(1)$ uniformly for $\sqrt r\le j\le r$. The omitted indices contribute $o(r)$ to the sum. Then $\sum_{j\le r}\log j=r\log r-r+o(r)$ and $\sum_{2\le j\le r}\log\log j=r\log\log r+o(r)$, which prove \eqref{eq:Lasymp}.
+
+For sequences with $g\to\infty$, substituting \eqref{eq:Lasymp} into \eqref{eq:L} gives
+\[
+\log g+\log\log g\le\log X+1-\frac{7\log7+8\log8}{15}+o(1).
+\]
+In particular, $g=O(X/\log X)=O(\pi(X))$. Along a subsequence where $g/\pi(X)$ tends to a positive value $c$, we have $\log g+\log\log g=\log X+\log c+o(1)$. Hence
+\[
+\log c\le1-\frac{7\log7+8\log8}{15}.
+\]
+Subsequences for which $g$ is bounded, or $g/\pi(X)\to0$, already satisfy the conclusion.
+\end{proof}
+
+The proposition bounds the number of these particular blocks. It is not an upper bound for $h(N)$: other blocks, overlapping prime supports, and other constructions are not covered. In Lemma~\ref{lem:alloc}, each block replaces a squarefree completion cost of twelve elements by thirteen, so its contribution to the excess is one per block up to the completion error. Numerically, the allocation of Table~\ref{tab:alloc} realizes $0.29153/0.36163\approx81\%$ of the ceiling in Proposition~\ref{prop:blockbound}; any further gain from this block is at most a factor $1.24$.
+
+\section*{Statements and Declarations}
+\noindent\textbf{Funding.} This research received no external funding.
+
+\noindent\textbf{Competing interests.} The author declares no competing interests.
+
+\noindent\textbf{Data and code availability.} No external datasets were used. All mathematical proofs are included in the article. Scripts that verify the finite computations of Section~\ref{sec:lower} in exact arithmetic, and that evaluate the constants of Proposition~\ref{prop:explicit}, are available with their recorded output at \url{https://github.com/ramanujamath/erdos-distinct-subset-products}.
+
+\noindent\textbf{Use of generative AI.} Generative AI tools were used for mathematical exploration, development and checking of arguments, computer verification of the finite computations, and drafting and editing of the manuscript. The author has checked all arguments and computations and takes full responsibility for the content.
+
+\begin{thebibliography}{9}
+\bibitem{Erdos} P. Erd\H{o}s, Some applications of graph theory to number theory, in: \emph{Proceedings of the Second Chapel Hill Conference on Combinatorial Mathematics and its Applications} (Chapel Hill, N.C., 1970), University of North Carolina, Chapel Hill, 1970, pp.~136--145. \url{https://renyi.hu/~p_erdos/1970-20.pdf}.
+\bibitem{Raghavan} R. Raghavan, Sharp bounds for sets with distinct subset products, \emph{Acta Mathematica Hungarica} \textbf{177} (2025), 363--377. \url{https://doi.org/10.1007/s10474-025-01578-4}.
+\bibitem{Schrijver} A. Schrijver, Bounds on the number of Eulerian orientations, \emph{Combinatorica} \textbf{3} (1983), 375--380. \url{https://doi.org/10.1007/BF02579193}.
+\bibitem{BC} M. Borb\'enyi and P. Csikv\'ari, Counting degree-constrained subgraphs and orientations, \emph{Discrete Mathematics} \textbf{343} (2020), no.~6, Article 111842. \url{https://doi.org/10.1016/j.disc.2020.111842}.
+\bibitem{Huxley} M. N. Huxley, On the difference between consecutive primes, \emph{Inventiones Mathematicae} \textbf{15} (1972), 164--170.
+\bibitem{Ingham} A. E. Ingham, On the difference between consecutive primes, \emph{Quarterly Journal of Mathematics (Oxford)} \textbf{8} (1937), 255--266.
+\end{thebibliography}
+
+\end{document}
